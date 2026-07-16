@@ -1,7 +1,7 @@
 (function () {
   // The cheatsheet count lives in the library's own data.json — never copy it
   // here, or this landing starts lying the day a cheatsheet is added.
-  var DATA_URL = "https://jetmetrics-io.github.io/hub-cheatsheets/data.json";
+  var DATA_URL = "https://jetmetrics-static.storage.yandexcloud.net/hub-cheatsheets/data.json";
 
   function pluralize(n, one, few, many) {
     var mod10 = n % 10;
