@@ -1,4 +1,21 @@
 (function () {
+  // A logged-in member has no use for the public /knowledge landing — send them
+  // straight to their hub. Membership is detected exactly like the header does
+  // it: Tilda writes a `tilda_members_profile{projectId}` localStorage key on
+  // login. The pathname guard keeps this a no-op on /hub* pages, so app.js is
+  // safe to reuse there without looping.
+  try {
+    var isMember = Object.keys(localStorage).some(function (key) {
+      return key.indexOf("tilda_members_profile") === 0;
+    });
+    if (isMember && location.pathname.indexOf("/hub") !== 0) {
+      location.replace("/hub");
+      return;
+    }
+  } catch (e) {
+    // localStorage blocked (private mode / cookies off) — just show the landing.
+  }
+
   // The cheatsheet count lives in the library's own data.json — never copy it
   // here, or this landing starts lying the day a cheatsheet is added.
   var DATA_URL = "https://jetmetrics-static.storage.yandexcloud.net/hub-cheatsheets/data.json";
