@@ -4,10 +4,11 @@
   // it: Tilda writes a `tilda_members_profile{projectId}` localStorage key on
   // login. The pathname guard keeps this a no-op on /hub* pages, so app.js is
   // safe to reuse there without looping.
+  // Since the switch to sign-in by email (sign-in, 2026): the pass of our sign-in server ("jm-pass") counts too.
   try {
     var isMember = Object.keys(localStorage).some(function (key) {
       return key.indexOf("tilda_members_profile") === 0;
-    });
+    }) || !!(window.jmAuth && window.jmAuth.signedIn());
     if (isMember && location.pathname.indexOf("/hub") !== 0) {
       location.replace("/hub");
       return;
